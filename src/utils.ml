@@ -13,3 +13,9 @@ let split_n_prems l n =
     | x -> res,x  
   in
   aux [] l 0
+
+let iota n = 
+  let rec loop acc = function
+    | 0 -> acc
+    | n -> loop (n::acc) (n-1)
+  in loop [] n 
