@@ -1,1 +1,3 @@
 PKG lablgtk2
+B _build
+B _build/src
