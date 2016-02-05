@@ -1,2 +1,2 @@
 # OCaCoinche
-*cogne sur la table*
+<*cogne sur la table*>
