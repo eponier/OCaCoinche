@@ -106,22 +106,16 @@ let compare atout demande (v1,c1) (v2,c2) =
   | a,b when b = demande -> -1
   | a,b -> (* pas besoin de comparer deux cartes pissées.*) assert false
 
-
-
-(* ***
-
-type partie = {e1:equipe; e2:equipe; manches: manche list; paquet: carte list}
-
-and manche = {atout:couleur; a:joueur; b:joueur; c:joueur; d:joueur}
-
-and equipe = {j1:joueur; j2:joueur; score:int}
-
-and joueur = string
-
-let init = {
-  e1 = {j1="bli"; j2="bla"; score = 0};
-  e2 = {j1="blou"; j2="blbl"; score = 0};
-  manches = [];
-  paquet = Utils.shuffle paquet
-}
-***)
+(* 
+   retourne la liste des cartes jouables
+   selon un atout, une couleur demandée, 
+   et si le coéquipier est maitre
+*)
+let valides (cartes:carte list) ((valeur,atout):carte) (demande:couleur) (maitre:bool) =
+  let atouts,normales = List.partition (fun (_,c) -> c=atout) cartes in
+  let demandes,pisse = List.partition (fun (_,c) -> c=demande) normales in
+  let monte,sous = List.partition (fun (v,_) -> compare_atout v valeur > 0) atouts in
+  if atout = demande then if monte <> [] then monte else if sous <> [] then sous else normales
+  else if demandes <> [] then demandes
+  else if maitre then cartes else if atouts <> [] then atouts else pisse
+	
