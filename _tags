@@ -1,1 +1,1 @@
-true:package(lablgtk2, lablgtk2-extras)
+true:package(sdl, sdl.sdlimage, sdl.sdlttf)

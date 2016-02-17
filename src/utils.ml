@@ -1,3 +1,5 @@
+open Config 
+
 let shuffle_array a =
   Array.sort (fun _ _ -> (Random.int 3) - 1) a
 

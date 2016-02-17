@@ -1,3 +1,3 @@
-PKG lablgtk2
+PKG sdl
 B _build
 B _build/src
