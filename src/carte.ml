@@ -105,6 +105,27 @@ let compare_carte atout demande (v1,c1) (v2,c2) =
   | a,b when b = demande -> -1
   | a,b -> (* pas besoin de comparer deux cartes pissées.*) assert false
 
+let string_of_carte (v,c) = 
+  let v = match v with 
+    | Sept -> "Sept"
+    | Huit -> "Huit"
+    | Neuf -> "Neuf"
+    | Dix -> "Dix"
+    | Valet -> "Valet"
+    | Dame -> "Dame"
+    | Roi -> "Roi"
+    | As -> "As"
+  in
+  let c = 
+    match c with 
+    | Trefle -> "trèfle"
+    | Coeur -> "coeur"
+    | Pique -> "pique"
+    | Carreau -> "carreau"
+  in
+  v ^ " de " ^ c
+
+
 (* 
    retourne la liste des cartes jouables
    selon un atout, une couleur demandée, 
@@ -121,19 +142,27 @@ let valides
       atouts
   in
   if atout = demande then
-    if monte <> [] then monte 
-    else if sous <> [] then sous
-    else normales
-    else if demandes <> [] then demandes
-    else if maitre then cartes 
-    else if atouts <> [] then atouts else pisse
-	
+    begin
+      if monte <> [] then 
+	monte 
+      else if sous <> [] then
+	sous
+      else normales
+    end
+  else if demandes <> [] then 
+    demandes
+  else if maitre then
+    cartes 
+  else if atouts <> [] then 
+      atouts 
+  else pisse
+      
 let trie_main cartes = 
   let coeurs = List.filter (fun (_,c) -> c = Coeur) cartes in
   let trefles = List.filter (fun (_,c) -> c = Trefle) cartes in
   let carreaux = List.filter (fun (_,c) -> c = Carreau) cartes in
   let piques = List.filter (fun (_,c) -> c = Pique) cartes in
-  let f (v,_) (v',_) = compare_meme v v' in
+  let f (v,_) (v',_) = -1 * compare_meme v v' in
   let coeurs = List.sort f coeurs in
   let trefles = List.sort f trefles in
   let carreaux = List.sort f carreaux in
